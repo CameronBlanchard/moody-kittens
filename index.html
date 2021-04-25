@@ -31,7 +31,8 @@
         <img src="moody-logo.png" height="250" alt="Moody Kittens">
         <div class="mt-2">
           <b class="text-center">Hello!</b>
-          <p>If you have never owned a cat, this is your chance to find out what it is like.  If you have, then you know the drill.</p>
+          <p>If you have never owned a cat, this is your chance to find out what it is like. If you have, then you know
+            the drill.</p>
           <small>Good Luck and Have Fun!</small>
           <br>
           <button onclick="getStarted()">Get Started</button>
@@ -44,18 +45,27 @@
       </div>
     </div>
 
-      <div id="k-angry" class="d-flex justify-content-center angry-at-cat hidden">
-        If your Kittens have made you angry, you can start over.
-      </div>
-      
-      <div id="k-angry-btn" class="d-flex justify-content-center pb-3 hidden">
-        <button id="remove-btn" class="btn-cancel" onclick="deleteKittens()">Delete Kittens</button>
-      </div>
-    
+    <div>
+      <audio id="purr" src="animal_cat_purr_short.mp3"></audio>
+      <audio id="meow" src="animals_cat_meow_003.mp3"></audio>
+      <audio id="roar" src="animals_lion_growl_001.mp3"></audio>
+      <audio id="gone" src="audio_mangler_whoosh_fee_204_443.mp3"></audio>
+      <audio id="bark" src="animal-dog-labrador-single-bark-internal-004.mp3"></audio>
+    </div>
+
+    <div id="k-angry" class="d-flex justify-content-center angry-at-cat hidden">
+      If your Kittens have made you angry, you can start over.
+    </div>
+
+    <div id="k-angry-btn" class="d-flex justify-content-center pb-3 hidden">
+      <button id="remove-btn" class="btn-cancel" onclick="deleteKittens()">Delete Kittens</button>
+    </div>
+
   </main>
 
   <footer class="card bg-dark text-light p-2 d-flex align-items-center justify-content-center">
-    <small>Created with <span style="color: var(--primary)">&hearts;</span> by CodeWorks and Cameron</small>
+    <small>Created with <span style="color: var(--primary)">&hearts;</span> by CodeWorks and Cameron | Sound from: <a
+        href="https://www.zapsplat.com">Zapsplat.com<zapsplat class="com"></zapsplat></a></small>
   </footer>
 
   <script src="app.js"></script>

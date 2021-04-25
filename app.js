@@ -1,3 +1,4 @@
+// @ts-nocheck
 /**
  * Stores the list of kittens
  * @type {Kitten[]}
@@ -31,11 +32,11 @@ function addKitten(event) {
   }
   else
     kittens.push(kitten)
-    setKittenMood(kitten)
-    saveKittens()
-    form.reset()
-    loadKittens()
-    drawKittens()
+  setKittenMood(kitten)
+  saveKittens()
+  form.reset()
+  loadKittens()
+  drawKittens()
 }
 
 /**
@@ -56,7 +57,7 @@ function loadKittens() {
   let getKitten = JSON.parse(window.localStorage.getItem("kittens"))
   if (getKitten) {
     kittens = getKitten
-  } 
+  }
   let getKittenGone = JSON.parse(window.localStorage.getItem("kittensGone"))
   if (getKittenGone) {
     kittensGone = getKittenGone
@@ -80,33 +81,35 @@ function drawKittens() {
   let kittensTemplate = ""
   kittensGone.forEach(kitten => {
     kittensTemplate += `<div class="container bg-dark">
-    <div id="kitten-pic" class="p-2 d-flex justify-content-center kitten ${kitten.mood}">
-    <img height="150" width="auto" src="https://robohash.org/<${kitten.name}>?set=set4" alt="Moody Kitten">
-    </div>
-    <div style="color: var(--danger);" class="container m-2">
-    <span>${kitten.name} has run away!</span>
-    </div>
+      <div id="kitten-pic" class="p-2 d-flex justify-content-center kitten ${kitten.mood}">
+        <img height="150" width="auto" src="https://robohash.org/<${kitten.name}>?set=set4" alt="Moody Kitten">
+      </div>
+      <div style="color: var(--danger);" class="container m-2">
+        <span>${kitten.name} has run away!</span>
+      </div>
     </div>`
   });
   kittensElem.innerHTML = kittensTemplate
   kittens.forEach(kitten => {
     kittensTemplate += `
     <div class="container bg-dark">
-    <div id="kitten-pic" class="p-2 d-flex justify-content-center kitten ${kitten.mood}">
-    <img height="150" width="auto" src="https://robohash.org/<${kitten.name}>?set=set4">
+      <div id="kitten-pic" class="p-2 d-flex justify-content-center kitten ${kitten.mood}">
+        <img height="150" width="auto" src="https://robohash.org/<${kitten.name}>?set=set4">
+      </div>
+      <div class="container text-light m-2">
+        <span>Name: </span><span>${kitten.name}</span>
+        <br>
+        <span>Mood: </span><span>${kitten.mood}</span>
+        <br>
+        <span>Affection: </span><span>${kitten.affection}</span>
+        <div class="flex-wrap m-1">
+          <button class="btn-cancel btn" onclick="pet('${kitten.id}')">pet</button>
+          <button onclick="catnip('${kitten.id}')">catnip</button>
+          <button class="btn-cancel btn" onclick="bark('${kitten.id}')">bark</button>
+        </div>
+      </div>
     </div>
-    <div class="container text-light m-2">
-    <span>Name: </span><span>${kitten.name}</span>
-    <br>
-    <span>Mood: </span><span>${kitten.mood}</span>
-    <br>
-    <span>Affection: </span><span>${kitten.affection}</span>
-    <div class="d-flex space-around m-1">
-    <button class="btn-cancel btn" onclick="pet('${kitten.id}')">pet</button>
-    <button onclick="catnip('${kitten.id}')">catnip</button>
-    </div>
-    </div>
-    </div>
+
     `
   });
   kittensElem.innerHTML = kittensTemplate
@@ -165,6 +168,16 @@ function catnip(id) {
   drawKittens()
 }
 
+function bark(id) {
+  let kitten = findKittenById(id)
+  kitten.mood = "gone"
+  kitten.affection = 0
+  document.getElementById("bark").play()
+  setKittenMood(kitten)
+  saveKittens()
+  ifKittenRunsAway(id)
+}
+
 /**
  * Sets the kittens mood based on its affection
  * Happy > 6, Tolerant <= 5, Angry <= 3, Gone <= 0
@@ -172,13 +185,14 @@ function catnip(id) {
  */
 function setKittenMood(kitten) {
   switch (true) {
-    case (kitten.affection >= 6): kitten.mood = "happy"
+    // @ts-ignore
+    case (kitten.affection >= 6): kitten.mood = "happy", document.getElementById("purr").play()
       break
-    case (kitten.affection <= 0): kitten.mood = "gone"
+    case (kitten.affection <= 0): kitten.mood = "gone", document.getElementById("gone").play()
       break
-    case (kitten.affection <= 3): kitten.mood = "angry"
+    case (kitten.affection <= 3): kitten.mood = "angry", document.getElementById("roar").play()
       break
-    case (kitten.affection <= 5): kitten.mood = "tolerant"
+    case (kitten.affection <= 5): kitten.mood = "tolerant", document.getElementById("meow").play()
       break
   }
   saveKittens()
